@@ -6,7 +6,7 @@
 
 #define CMD_MAX_SIZE 4096
 
-int main(int argc, char* argv[]){
+int main(){
 
     char buf[CMD_MAX_SIZE];
 
@@ -15,10 +15,11 @@ int main(int argc, char* argv[]){
             printf("reading error\n");
             return -1;
         }
-        char** cmd_data = parse_buffer(buf);
+        char*** cmd_data = parse_buffer(buf);
+        //printf("%s\n", &cmd_data[1]);
         run_cmd(cmd_data);
         free(cmd_data);
-        printf("next string\n");
+        //printf("next string\n");
     }
 
 
