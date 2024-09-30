@@ -5,10 +5,19 @@
 
 
 int main(){
-    char test[] = "ls -l | grep A | HUI popa | penis";
+    char test[] = "uptime | ls -l | grep a";
     char*** test_ans = parse_buffer(test);
-
-    printf("%s\n", test_ans[3][0]);
+    int i = 0;
+    int j = 0;
+    while (test_ans[i] != NULL){
+        j = 0;
+        while (test_ans[j] != NULL){
+            printf("pos: [%d][%d] ------ %s\n", i, j, test_ans[i][j]);
+            j++;
+        }
+        i++;
+    }
+    //printf("%s\n", test_ans[0][0]);
 
     free_cmd(test_ans);
 
@@ -43,18 +52,23 @@ char*** parse_buffer(char* buf){
     const char* arg_sep = " ";
     int args_num = 0;
 
-    char*** arg_data = (char***)calloc(cmd_counter + 10, sizeof(char**));
+    char*** arg_data = (char***)calloc(cmd_counter + 1, sizeof(char**));
     
 
     while (cnt < cmd_counter){
-        printf("%d\n", cnt);
+       //printf("%d\n", cnt);
+       
         args_num = count_symbol(cmd_data[cnt], arg_sep);
-        //printf("%d\n", args_num);
+        //printf("args num: %d\n", args_num);
+        
         arg_data[cnt] = (char**)calloc(args_num + 1, sizeof(char*));
         istr = strtok(cmd_data[cnt], arg_sep);
 
         int i = 0;
+        
         while (istr != NULL){
+            //printf("cicle iteration: %d\n", i);
+            
             arg_data[cnt][i] = istr;
             //printf("%s\n", arg_data[cnt][i]); 
             istr = strtok(NULL, arg_sep);
@@ -63,13 +77,10 @@ char*** parse_buffer(char* buf){
 
         //printf("%s\n", arg_data[cnt][i-1]);
 
-        //arg_data[cnt][i] = NULL;
-
         cnt++;
        
     }
     
-
     //printf("%s\n", arg_data[0][0]);
     free(cmd_data);
 
@@ -79,7 +90,7 @@ char*** parse_buffer(char* buf){
 
     arg_data[cnt] = NULL;
 
-    printf("zalupa2\n");
+    //printf("zalupa2\n");
  
     return arg_data;
     
@@ -101,7 +112,7 @@ int count_symbol(char* str, const char* sym){
 void free_cmd(char*** cmd_data){
     int cmd_len = sizeof(cmd_data)/sizeof(cmd_data[0]);
 
-    printf("len:%d\n", cmd_len);
+    //printf("len:%d\n", cmd_len);
 
     int i = 0;
     while (i < cmd_len){
