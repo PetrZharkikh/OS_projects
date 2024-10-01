@@ -5,13 +5,13 @@
 
 
 int main(){
-    char test[] = "uptime | ls -l | grep a";
+    char test[] = "uptime | ls -l | grep";
     char*** test_ans = parse_buffer(test);
     int i = 0;
     int j = 0;
     while (test_ans[i] != NULL){
         j = 0;
-        while (test_ans[j] != NULL){
+        while (test_ans[i][j] != NULL){
             printf("pos: [%d][%d] ------ %s\n", i, j, test_ans[i][j]);
             j++;
         }
@@ -110,9 +110,9 @@ int count_symbol(char* str, const char* sym){
 }
 
 void free_cmd(char*** cmd_data){
-    int cmd_len = sizeof(cmd_data)/sizeof(cmd_data[0]);
+    int cmd_len = sizeof(cmd_data)/sizeof(cmd_data[0][0]);
 
-    //printf("len:%d\n", cmd_len);
+    printf("len:%d\n", cmd_len);
 
     int i = 0;
     while (i < cmd_len){
@@ -125,4 +125,4 @@ void free_cmd(char*** cmd_data){
 
 // "ls -l | grep A | HUI p"
 // 1) {"ls -l", "grep A", "HUI p"}
-// 2) {{"ls", "-l"},{"grep", "A", "B"}, NULL}
+// 2) {{"ls", "-l"},{"grep", "A", "B"}, NULL}g   
