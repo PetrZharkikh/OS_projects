@@ -4,7 +4,6 @@
 #include "cmd.h"
 #include "parse.h"
 
-#define CMD_MAX_SIZE 4096
 
 int main(){
 
@@ -15,11 +14,11 @@ int main(){
             printf("reading error\n");
             return -1;
         }
+
         char*** cmd_data = parse_buffer(buf);
-        //printf("%s\n", &cmd_data[1]);
         run_cmd(cmd_data);
-        free(cmd_data);
-        //printf("next string\n");
+
+        free_cmd(cmd_data, buf);
     }
 
 
